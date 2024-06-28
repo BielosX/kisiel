@@ -1,20 +1,17 @@
 package org.kisiel
 
-import static java.nio.charset.StandardCharsets.UTF_8
+import org.lwjgl.glfw.GLFWErrorCallback
+import org.lwjgl.opengl.GL
+
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks
 import static org.lwjgl.glfw.GLFW.*
 import static org.lwjgl.opengl.GL11.*
 import static org.lwjgl.system.MemoryUtil.NULL
 
-import groovy.yaml.YamlSlurper
-import org.lwjgl.glfw.GLFWErrorCallback
-import org.lwjgl.opengl.GL
-
 class Main {
 	static void main(String[] args) {
-		def parser = new YamlSlurper()
-		def defaultConfig = Main.getClassLoader().getResourceAsStream("default.yaml")
-		def config = parser.parseText(new String(defaultConfig.readAllBytes(), UTF_8)) as Configuration
+		def loader = new ConfigLoader()
+		def config = loader.loadDefault()
 		GLFWErrorCallback.createPrint(System.err).set()
 		if (!glfwInit()) {
 			throw new IllegalStateException("Unable to initialize GLFW")
