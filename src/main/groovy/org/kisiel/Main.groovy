@@ -16,7 +16,7 @@ class Main {
 		}
 
 		window.show()
-		window.untilClosed { w ->
+		window.untilClosed { long w ->
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 			glfwSwapBuffers(w)
 			glfwPollEvents()
