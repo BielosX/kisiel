@@ -19,7 +19,7 @@ class Configuration {
 class ConfigLoader {
 	def private parser = new YamlSlurper()
 
-    Configuration loadDefault() {
+	Configuration loadDefault() {
 		def resource = ConfigLoader.classLoader.getResourceAsStream('default.yaml')
 		return parser.parseText(new String(resource.readAllBytes())) as Configuration
 	}
