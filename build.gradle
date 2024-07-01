@@ -74,3 +74,7 @@ spotless {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.register("createResourcesMetadata", ResourcesMetadataTask)
+
+tasks.compileGroovy.finalizedBy("createResourcesMetadata")
