@@ -15,7 +15,9 @@ switch (OperatingSystem.current()) {
 		project.ext.lwjglNatives = "natives-linux"
 		break
 	case OperatingSystem.MAC_OS:
-		project.ext.lwjglNatives = System.getProperty("os.arch").startsWith("aarch64") ? "natives-macos-arm64" : "natives-macos"
+		project.ext.lwjglNatives = System.getProperty("os.arch").startsWith("aarch64")
+		? "natives-macos-arm64"
+		: "natives-macos"
 		break
 	case OperatingSystem.WINDOWS:
 		project.ext.lwjglNatives = "natives-windows"
