@@ -22,6 +22,12 @@ class Main {
 			0.5f,
 			0.0f
 		] as float[])
+		def secondTriangle = new VertexArray()
+		secondTriangle.addCoordinates([
+				-1.0f, 1.0f, 0.0f,
+				-0.7f, 1.0f, 0.0f,
+				-0.8f, 0.7f, 0.0f
+		] as float[])
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
 		def shaderProgram = new ShaderProgram(vertexShader, fragmentShader)
@@ -37,6 +43,7 @@ class Main {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 			shaderProgram.use()
 			vertexArray.drawTriangles()
+			secondTriangle.drawTriangles()
 			glfwSwapBuffers(w)
 			glfwPollEvents()
 		}
