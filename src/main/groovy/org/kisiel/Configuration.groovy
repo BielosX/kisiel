@@ -12,15 +12,31 @@ class WindowConfig {
 }
 
 @Immutable
+class OpenglVersion {
+	int major
+	int minor
+}
+
+@Immutable
+class OpenglConfig {
+	OpenglVersion version
+}
+
+@Immutable
 class Configuration {
 	WindowConfig window
+	OpenglConfig opengl
 }
 
 class ConfigLoader {
-	def private parser = new YamlSlurper()
+	private def parser = new YamlSlurper()
+	private ResourcesLoader resourceLoader
+
+	ConfigLoader(ResourcesLoader loader) {
+		resourceLoader = loader
+	}
 
 	Configuration loadDefault() {
-		def resource = ConfigLoader.classLoader.getResourceAsStream('default.yaml')
-		return parser.parseText(new String(resource.readAllBytes())) as Configuration
+		return parser.parseText(resourceLoader.getResource('default.yaml')) as Configuration
 	}
 }

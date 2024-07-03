@@ -20,6 +20,9 @@ class Window {
 		glfwDefaultWindowHints()
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE)
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, config.opengl.version.major)
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, config.opengl.version.minor)
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE)
 
 		def monitor = config.window.fullscreen ? glfwGetPrimaryMonitor() : NULL
 		window = glfwCreateWindow(config.window.width, config.window.height, config.window.title, monitor, NULL)
