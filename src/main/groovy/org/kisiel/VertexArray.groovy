@@ -31,8 +31,8 @@ class VertexArray {
 	void addCoordinates(float[] coordinates) {
 		MemoryStack.stackPush().withCloseable { stack ->
 			def buffer = stack.callocFloat(coordinates.size())
-			buffer.put(coordinates)
-			buffer.clear()
+					.put(coordinates)
+					.clear()
 			addCoordinates(buffer)
 		}
 	}
