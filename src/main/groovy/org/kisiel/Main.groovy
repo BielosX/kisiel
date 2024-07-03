@@ -24,9 +24,15 @@ class Main {
 		] as float[])
 		def secondTriangle = new VertexArray()
 		secondTriangle.addCoordinates([
-				-1.0f, 1.0f, 0.0f,
-				-0.7f, 1.0f, 0.0f,
-				-0.8f, 0.7f, 0.0f
+			-1.0f,
+			1.0f,
+			0.0f,
+			-0.7f,
+			1.0f,
+			0.0f,
+			-0.8f,
+			0.7f,
+			0.0f
 		] as float[])
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
