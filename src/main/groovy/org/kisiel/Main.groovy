@@ -36,8 +36,7 @@ class Main {
 		window.untilClosed { long w ->
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 			shaderProgram.use()
-			vertexArray.use()
-			glDrawArrays(GL_TRIANGLES, 0, 3)
+			vertexArray.drawTriangles()
 			glfwSwapBuffers(w)
 			glfwPollEvents()
 		}

@@ -14,6 +14,7 @@ import org.lwjgl.system.MemoryStack
 class VertexArray {
 	int vertexBufferId
 	int vertexArrayId
+    int triangles
 
 	VertexArray() {
 		vertexBufferId = glGenBuffers()
@@ -21,6 +22,7 @@ class VertexArray {
 	}
 
 	void addCoordinates(FloatBuffer buffer) {
+        triangles = buffer.remaining().intdiv(3)
 		glBindVertexArray(vertexArrayId)
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId)
 		glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW)
@@ -40,4 +42,9 @@ class VertexArray {
 	void use() {
 		glBindVertexArray(vertexArrayId)
 	}
+
+    void drawTriangles() {
+        use()
+        glDrawArrays(GL_TRIANGLES, 0, triangles)
+    }
 }
