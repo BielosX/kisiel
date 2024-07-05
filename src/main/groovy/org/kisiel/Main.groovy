@@ -34,6 +34,27 @@ class Main {
 			0.7f,
 			0.0f
 		] as float[])
+		secondTriangle.addIndices([0, 1 , 2] as int[])
+		def plane = new VertexArray()
+		plane.addCoordinates([
+			// top right
+			1.0f,
+			1.0f,
+			0.0f,
+			// bottom right
+			1.0f,
+			0.8f,
+			0.0f,
+			// bottom left
+			0.8f,
+			0.8f,
+			0.0f,
+			// top left
+			0.8f,
+			1.0f,
+			0.0f
+		] as float[])
+		plane.addIndices([0, 1, 3, 1, 2 , 3] as int[])
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
 		def shaderProgram = new ShaderProgram(vertexShader, fragmentShader)
@@ -50,6 +71,7 @@ class Main {
 			shaderProgram.use()
 			vertexArray.drawTriangles()
 			secondTriangle.drawTriangles()
+			plane.drawTriangles()
 			glfwSwapBuffers(w)
 			glfwPollEvents()
 		}
