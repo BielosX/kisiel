@@ -1,6 +1,6 @@
 package org.kisiel
 
-
+import static org.kisiel.BufferClearer.clearer
 import static org.lwjgl.glfw.GLFW.*
 import static org.lwjgl.opengl.GL11.*
 
@@ -67,7 +67,7 @@ class Main {
 
 		window.show()
 		window.untilClosed { long w ->
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+			clearer().color().depth().clear()
 			shaderProgram.use()
 			vertexArray.drawTriangles()
 			secondTriangle.drawTriangles()
