@@ -2,7 +2,6 @@ package org.kisiel
 
 import static org.kisiel.BufferClearer.clearer
 import static org.lwjgl.glfw.GLFW.*
-import static org.lwjgl.opengl.GL11.*
 
 class Main {
 	static void main(String[] args) {
