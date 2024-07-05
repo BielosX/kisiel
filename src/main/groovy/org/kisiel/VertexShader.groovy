@@ -1,22 +1,9 @@
 package org.kisiel
 
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER
-import static org.lwjgl.opengl.GL20.glCreateShader
-import static org.lwjgl.opengl.GL20.glDeleteShader
-import static org.lwjgl.opengl.GL20.glShaderSource
+import static org.lwjgl.opengl.GL20.*
 
-class VertexShader implements Shader {
-	int shaderId
-
+class VertexShader extends Shader {
 	VertexShader(ResourcesLoader loader, String resourceName) {
-		def shaderCode = loader.getResource(resourceName)
-		shaderId = glCreateShader(GL_VERTEX_SHADER)
-		glShaderSource(shaderId, shaderCode)
-		ShaderCompiler.compile(shaderId)
-	}
-
-	@Override
-	void delete() {
-		glDeleteShader(shaderId)
+		loadShader(loader, resourceName, { glCreateShader(GL_VERTEX_SHADER) })
 	}
 }
