@@ -75,6 +75,13 @@ class Main {
 			glfwPollEvents()
 		}
 
+		[
+			vertexArray,
+			secondTriangle,
+			plane
+		].each { it -> it.destroy() }
+		[vertexShader, fragmentShader].each { it -> it.delete() }
+		shaderProgram.delete()
 		window.destroy()
 	}
 }

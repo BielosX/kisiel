@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL15.*
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer
 import static org.lwjgl.opengl.GL30.glBindVertexArray
+import static org.lwjgl.opengl.GL30.glDeleteVertexArrays
 import static org.lwjgl.opengl.GL30.glGenVertexArrays
 
 import java.nio.FloatBuffer
@@ -69,5 +70,13 @@ class VertexArray {
 		} else {
 			glDrawArrays(GL_TRIANGLES, 0, triangles)
 		}
+	}
+
+	void destroy() {
+		glDeleteBuffers([
+			vertexBufferId,
+			elementBufferId
+		] as int[])
+		glDeleteVertexArrays(vertexArrayId)
 	}
 }
