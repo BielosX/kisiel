@@ -1,7 +1,12 @@
 package org.kisiel
 
+import java.time.Duration
+import java.time.Instant
+
 import static org.kisiel.BufferClearer.clearer
+import static org.kisiel.math.Vector4.vec4
 import static org.lwjgl.glfw.GLFW.*
+import static org.lwjgl.opengl.GL11.*
 
 class Main {
 	static void main(String[] args) {
@@ -56,7 +61,20 @@ class Main {
 		plane.addIndices([0, 1, 3, 1, 2 , 3] as int[])
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
+		def colors = [
+			vec4(1.0f, 0.0f, 0.0f, 1.0f),
+			vec4(0.0f, 1.0f, 0.0f, 1.0f),
+			vec4(0.0f, 0.0f, 1.0f, 1.0f),
+			vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		]
 		def shaderProgram = new ShaderProgram(vertexShader, fragmentShader)
+		def colorIndex = 0
+		def random = new Random()
+		def alpha = 50
+		glEnable(GL_BLEND)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		shaderProgram.setUniform("color", colors[colorIndex])
+		shaderProgram.setUniform("alpha", alpha / 100)
 		shaderProgram.use()
 		window.registerKeyCallback {w, key, scancode, action, mods ->
 			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
@@ -65,7 +83,17 @@ class Main {
 		}
 
 		window.show()
+		def elapsed = 0
 		window.untilClosed { long w ->
+			if (elapsed > 1000) {
+				elapsed -= 1000
+				colorIndex = colorIndex == 3 ? 0 : colorIndex+1
+				def color = colors[colorIndex]
+				alpha = random.nextInt(51) + 50
+				shaderProgram.setUniform("color", color)
+				shaderProgram.setUniform("alpha", alpha / 100)
+			}
+			def before = Instant.now()
 			clearer().color().depth().clear()
 			shaderProgram.use()
 			vertexArray.drawTriangles()
@@ -73,6 +101,8 @@ class Main {
 			plane.drawTriangles()
 			glfwSwapBuffers(w)
 			glfwPollEvents()
+			def after = Instant.now()
+			elapsed += Duration.between(before, after).toMillis()
 		}
 
 		[
