@@ -1,7 +1,5 @@
 package org.kisiel
 
-import java.util.stream.Stream
-
 import static org.lwjgl.opengl.GL11.*
 import static org.lwjgl.opengl.GL15.*
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer
@@ -9,6 +7,7 @@ import static org.lwjgl.opengl.GL30.*
 
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
+import java.util.stream.Stream
 import org.lwjgl.system.MemoryStack
 
 class VertexArray {
@@ -54,10 +53,10 @@ class VertexArray {
 		glBindBuffer(GL_ARRAY_BUFFER, bufferId)
 		attributeBuffers.push(bufferId)
 		def size = Arrays.stream(attributes)
-		.map { x ->
-			def first = x.getV1()
-			first.size()
-		}.reduce(0, { l, r ->  l + r })
+				.map { x ->
+					def first = x.getV1()
+					first.size()
+				}.reduce(0, Integer.&sum)
 		MemoryStack.stackPush().withCloseable { stack ->
 			def buffer = stack.callocFloat(size)
 			def first = attributes[0]
@@ -73,8 +72,8 @@ class VertexArray {
 		}
 		def offset = 0L
 		def stride = Arrays.stream(attributes)
-		.map { x -> x.getV2() }
-		.reduce(0, { l, r -> l + r }) * Float.BYTES
+				.map { x -> x.getV2() }
+				.reduce(0, Integer.&sum) * Float.BYTES
 		attributes.each { a ->
 			def attributeSize = a.getV2()
 			def bytes = attributeSize * Float.BYTES

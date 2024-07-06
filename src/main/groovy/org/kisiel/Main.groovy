@@ -63,32 +63,28 @@ class Main {
 		 */
 		def thirdTriangle = new VertexArray()
 		thirdTriangle.addSingleBufferFloatAttributes(new Tuple2([
-				-0.5f,
-				-0.5f,
-				0.0f,
-
-				0.5f,
-				-0.5f,
-				0.0f,
-
-				0.0f,
-				0.5f,
-				0.0f
+			-0.5f,
+			-0.5f,
+			0.0f,
+			0.5f,
+			-0.5f,
+			0.0f,
+			0.0f,
+			0.5f,
+			0.0f
 		] as float[], 3), new Tuple2([
-				1.0f,
-				0.0f,
-				0.0f,
-				1.0f,
-
-				0.0f,
-				1.0f,
-				0.0f,
-				1.0f,
-
-				0.0f,
-				0.0f,
-				1.0f,
-				1.0f
+			1.0f,
+			0.0f,
+			0.0f,
+			1.0f,
+			0.0f,
+			1.0f,
+			0.0f,
+			1.0f,
+			0.0f,
+			0.0f,
+			1.0f,
+			1.0f
 		] as float[], 4))
 		thirdTriangle.vertices = 3
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
