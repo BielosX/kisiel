@@ -62,28 +62,35 @@ class Main {
 		 plane.addIndices([0, 1, 3, 1, 2 , 3] as int[])
 		 */
 		def thirdTriangle = new VertexArray()
-		thirdTriangle.addCoordinates([
-			-0.5f,
-			-0.5f,
-			0.0f,
-			0.5f,
-			-0.5f,
-			0.0f,
-			0.0f,
-			0.5f,
-			0.0f
-		] as float[])
-		thirdTriangle.addFloatAttribute([
-			1.0f,
-			0.0f,
-			0.0f,
-			0.0f,
-			1.0f,
-			0.0f,
-			0.0f,
-			0.0f,
-			1.0f
-		] as float[], 3)
+		thirdTriangle.addSingleBufferFloatAttributes(new Tuple2([
+				-0.5f,
+				-0.5f,
+				0.0f,
+
+				0.5f,
+				-0.5f,
+				0.0f,
+
+				0.0f,
+				0.5f,
+				0.0f
+		] as float[], 3), new Tuple2([
+				1.0f,
+				0.0f,
+				0.0f,
+				1.0f,
+
+				0.0f,
+				1.0f,
+				0.0f,
+				1.0f,
+
+				0.0f,
+				0.0f,
+				1.0f,
+				1.0f
+		] as float[], 4))
+		thirdTriangle.vertices = 3
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
 		def colors = [
