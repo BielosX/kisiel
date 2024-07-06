@@ -1,12 +1,12 @@
 package org.kisiel
 
-import java.time.Duration
-import java.time.Instant
-
 import static org.kisiel.BufferClearer.clearer
 import static org.kisiel.math.Vector4.vec4
 import static org.lwjgl.glfw.GLFW.*
 import static org.lwjgl.opengl.GL11.*
+
+import java.time.Duration
+import java.time.Instant
 
 class Main {
 	static void main(String[] args) {
