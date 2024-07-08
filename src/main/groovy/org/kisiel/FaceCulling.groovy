@@ -1,5 +1,7 @@
 package org.kisiel
 
+import static org.kisiel.FaceCulling.CullFaceMode.BACK
+import static org.kisiel.FaceCulling.FrontFaceDirection.COUNTER_CLOCKWISE
 import static org.lwjgl.opengl.GL11.*
 
 class FaceCulling {
@@ -7,7 +9,11 @@ class FaceCulling {
 	CullFaceMode mode
 	FrontFaceDirection direction
 
-	private FaceCulling() {}
+	private FaceCulling() {
+		cullingEnabled = false
+		mode = BACK
+		direction = COUNTER_CLOCKWISE
+	}
 
 	enum CullFaceMode {
 		FRONT (GL_FRONT),
@@ -33,7 +39,6 @@ class FaceCulling {
 
 	static void faceCulling(Closure closure) {
 		FaceCulling culling = new FaceCulling()
-		culling.cullingEnabled = true
 		closure.resolveStrategy = Closure.DELEGATE_ONLY
 		closure.delegate = culling
 		closure()
