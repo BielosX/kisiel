@@ -63,6 +63,10 @@ class Main {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		//shaderProgram.setUniform("color", colors[colorIndex])
 		//shaderProgram.setUniform("alpha", alpha / 100)
+		FaceCulling.enabled()
+				.cullBack()
+				.clockwise()
+				.apply()
 		window.registerKeyCallback {w, key, scancode, action, mods ->
 			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
 				glfwSetWindowShouldClose(w, true)
