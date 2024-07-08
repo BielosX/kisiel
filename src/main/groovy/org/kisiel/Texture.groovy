@@ -1,6 +1,8 @@
 package org.kisiel
 
 import static org.lwjgl.opengl.GL11.*
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0
+import static org.lwjgl.opengl.GL13.glActiveTexture
 import static org.lwjgl.opengl.GL30.glGenerateMipmap
 import static org.lwjgl.stb.STBImage.stbi_image_free
 import static org.lwjgl.stb.STBImage.stbi_load_from_memory
@@ -39,5 +41,10 @@ class Texture {
 	void use() {
 		sampler.bind(textureId)
 		glBindTexture(GL_TEXTURE_2D, textureId)
+	}
+
+	void use(int textureIndex) {
+		glActiveTexture(GL_TEXTURE0 + textureIndex)
+		use()
 	}
 }

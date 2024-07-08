@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL20.glGetProgrami
 import static org.lwjgl.opengl.GL20.glGetUniformLocation
 import static org.lwjgl.opengl.GL20.glLinkProgram
 import static org.lwjgl.opengl.GL20.glUniform1f
+import static org.lwjgl.opengl.GL20.glUniform1i
 import static org.lwjgl.opengl.GL20.glUniform4fv
 import static org.lwjgl.opengl.GL20.glUseProgram
 
@@ -61,5 +62,10 @@ class ShaderProgram {
 	void setUniform(String name, float value) {
 		use()
 		glUniform1f(getLocation(name), value)
+	}
+
+	void setUniform(String name, int  value) {
+		use()
+		glUniform1i(getLocation(name), value)
 	}
 }

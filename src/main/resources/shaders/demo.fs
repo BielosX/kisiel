@@ -4,9 +4,10 @@ out vec4 FragColor;
 
 //uniform vec4 color;
 //uniform float alpha;
-uniform sampler2D sampler;
+uniform sampler2D firstTexture;
+uniform sampler2D secondTexture;
 
 void main()
 {
-    FragColor = texture(sampler, TexCoord);
+    FragColor = mix(texture(firstTexture, TexCoord), texture(secondTexture, TexCoord), 0.2);
 }

@@ -48,8 +48,12 @@ class Main {
 			1.0f
 		] as float[])
 		def sampler = new Sampler()
-		def texture = new Texture(sampler, resourcesLoader.getResourceBytes("textures/wood.png"))
-		texture.use()
+		def wood = new Texture(sampler, resourcesLoader.getResourceBytes("textures/wood.png"))
+		def woodIndex = 0
+		def moonIndex = 1
+		wood.use(woodIndex)
+		def moon = new Texture(sampler, resourcesLoader.getResourceBytes("textures/moon_overlay.png"))
+		moon.use(moonIndex)
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
 		def colors = [
@@ -59,6 +63,8 @@ class Main {
 			vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		]
 		def shaderProgram = new ShaderProgram(vertexShader, fragmentShader)
+		shaderProgram.setUniform("firstTexture", woodIndex)
+		shaderProgram.setUniform("secondTexture", moonIndex)
 		def colorIndex = 0
 		def random = new Random()
 		def alpha = 50
@@ -92,7 +98,8 @@ class Main {
 				color = true
 				depth = true
 			}
-			texture.use()
+			wood.use(woodIndex)
+			moon.use(moonIndex)
 			shaderProgram.use()
 			triangle.drawTriangles()
 			glfwSwapBuffers(w)
