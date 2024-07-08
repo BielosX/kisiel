@@ -16,15 +16,19 @@ class Main {
 		def window = new Window(config)
 		def triangle = new VertexArray()
 		triangle.addCoordinates([
+			// top right
 			0.5f,
 			0.5f,
 			0.0f,
+			// bottom right
 			0.5f,
 			-0.5f,
 			0.0f,
+			// bottom left
 			-0.5f,
 			-0.5f,
 			0.0f,
+			// top left
 			-0.5f,
 			0.5f,
 			0.0f,
