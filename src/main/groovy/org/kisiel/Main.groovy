@@ -9,7 +9,6 @@ import static org.kisiel.FaceCulling.FrontFaceDirection.CLOCKWISE
 import static org.kisiel.FaceCulling.faceCulling
 import static org.kisiel.math.Vector4.vec4
 import static org.lwjgl.glfw.GLFW.*
-import static org.lwjgl.opengl.GL11.*
 
 import java.time.Duration
 import java.time.Instant
