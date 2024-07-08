@@ -1,6 +1,9 @@
 package org.kisiel
 
-import static org.kisiel.BufferClearer.clearer
+import static org.kisiel.BufferClearer.clear
+import static org.kisiel.FaceCulling.CullFaceMode.BACK
+import static org.kisiel.FaceCulling.FrontFaceDirection.CLOCKWISE
+import static org.kisiel.FaceCulling.faceCulling
 import static org.kisiel.math.Vector4.vec4
 import static org.lwjgl.glfw.GLFW.*
 import static org.lwjgl.opengl.GL11.*
@@ -63,10 +66,10 @@ class Main {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		//shaderProgram.setUniform("color", colors[colorIndex])
 		//shaderProgram.setUniform("alpha", alpha / 100)
-		FaceCulling.enabled()
-				.cullBack()
-				.clockwise()
-				.apply()
+		faceCulling {
+			mode = BACK
+			direction = CLOCKWISE
+		}
 		window.registerKeyCallback {w, key, scancode, action, mods ->
 			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
 				glfwSetWindowShouldClose(w, true)
@@ -85,7 +88,10 @@ class Main {
 				//shaderProgram.setUniform("alpha", alpha / 100)
 			}
 			def before = Instant.now()
-			clearer().color().depth().clear()
+			clear {
+				color = true
+				depth = true
+			}
 			texture.use()
 			shaderProgram.use()
 			triangle.drawTriangles()
