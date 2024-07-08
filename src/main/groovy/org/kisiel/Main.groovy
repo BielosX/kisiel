@@ -1,5 +1,8 @@
 package org.kisiel
 
+import static org.kisiel.Blending.WeightingFactor.ONE_MINUS_SOURCE_ALPHA
+import static org.kisiel.Blending.WeightingFactor.SOURCE_ALPHA
+import static org.kisiel.Blending.blending
 import static org.kisiel.BufferClearer.clear
 import static org.kisiel.FaceCulling.CullFaceMode.BACK
 import static org.kisiel.FaceCulling.FrontFaceDirection.CLOCKWISE
@@ -68,11 +71,15 @@ class Main {
 		def colorIndex = 0
 		def random = new Random()
 		def alpha = 50
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		blending {
+			enabled = true
+			sourceWeightingFactor = SOURCE_ALPHA
+			destinationWeightingFactor = ONE_MINUS_SOURCE_ALPHA
+		}
 		//shaderProgram.setUniform("color", colors[colorIndex])
 		//shaderProgram.setUniform("alpha", alpha / 100)
 		faceCulling {
+			enabled = true
 			mode = BACK
 			direction = CLOCKWISE
 		}

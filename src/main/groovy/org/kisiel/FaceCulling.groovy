@@ -5,12 +5,12 @@ import static org.kisiel.FaceCulling.FrontFaceDirection.COUNTER_CLOCKWISE
 import static org.lwjgl.opengl.GL11.*
 
 class FaceCulling {
-	boolean cullingEnabled
+	boolean enabled
 	CullFaceMode mode
 	FrontFaceDirection direction
 
 	private FaceCulling() {
-		cullingEnabled = false
+		enabled = false
 		mode = BACK
 		direction = COUNTER_CLOCKWISE
 	}
@@ -42,12 +42,12 @@ class FaceCulling {
 		closure.resolveStrategy = Closure.DELEGATE_ONLY
 		closure.delegate = culling
 		closure()
-		if (culling.cullingEnabled) {
+		if (culling.enabled) {
 			glEnable(GL_CULL_FACE)
+			glCullFace(culling.mode.value)
+			glFrontFace(culling.direction.value)
 		} else {
 			glDisable(GL_CULL_FACE)
 		}
-		glCullFace(culling.mode.value)
-		glFrontFace(culling.direction.value)
 	}
 }
