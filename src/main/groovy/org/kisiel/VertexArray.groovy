@@ -1,14 +1,15 @@
 package org.kisiel
 
-import static org.lwjgl.opengl.GL11.*
-import static org.lwjgl.opengl.GL15.*
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer
-import static org.lwjgl.opengl.GL30.*
+import org.lwjgl.system.MemoryStack
 
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
-import java.util.stream.Stream
-import org.lwjgl.system.MemoryStack
+
+import static org.lwjgl.opengl.GL11.*
+import static org.lwjgl.opengl.GL15.*
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer
+import static org.lwjgl.opengl.GL30.*
 
 class VertexArray {
 	List<Integer> attributeBuffers = new ArrayList<>()
@@ -47,43 +48,6 @@ class VertexArray {
 		index++
 	}
 
-	void addSingleBufferFloatAttributes(Tuple2<Float[], Integer>... attributes) {
-		glBindVertexArray(vertexArrayId)
-		def bufferId = glGenBuffers()
-		glBindBuffer(GL_ARRAY_BUFFER, bufferId)
-		attributeBuffers.push(bufferId)
-		def size = Arrays.stream(attributes)
-				.map { x ->
-					def first = x.getV1()
-					first.size()
-				}.reduce(0, Integer.&sum)
-		MemoryStack.stackPush().withCloseable { stack ->
-			def buffer = stack.callocFloat(size)
-			def first = attributes[0]
-			def numberOfAttributes = first.getV1().size().intdiv(first.getV2())
-			(0..<numberOfAttributes).each { i ->
-				attributes.each { a ->
-					def attributeSize = a.getV2()
-					buffer.put(a.getV1() as float[], attributeSize * i, attributeSize)
-				}
-			}
-			buffer = buffer.clear()
-			glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW)
-		}
-		def offset = 0L
-		def stride = Arrays.stream(attributes)
-				.map { x -> x.getV2() }
-				.reduce(0, Integer.&sum) * Float.BYTES
-		attributes.each { a ->
-			def attributeSize = a.getV2()
-			def bytes = attributeSize * Float.BYTES
-			glVertexAttribPointer(index, attributeSize, GL_FLOAT, false, stride, offset)
-			glEnableVertexAttribArray(index)
-			index++
-			offset += bytes
-		}
-	}
-
 	void addFloatAttribute(float[] attribute, int size) {
 		MemoryStack.stackPush().withCloseable { stack ->
 			def buffer = stack.callocFloat(attribute.size())
@@ -91,6 +55,10 @@ class VertexArray {
 					.clear()
 			addFloatAttribute(buffer, size)
 		}
+	}
+
+	void addTextureCoordinates(float[] coordinates) {
+		addFloatAttribute(coordinates, 2)
 	}
 
 	void addIndices(IntBuffer buffer) {

@@ -14,79 +14,31 @@ class Main {
 		def loader = new ConfigLoader(resourcesLoader)
 		def config = loader.loadDefault()
 		def window = new Window(config)
-		/*
-		 def vertexArray = new VertexArray()
-		 vertexArray.addCoordinates([
-		 -0.5f,
-		 -0.5f,
-		 0.0f,
-		 0.5f,
-		 -0.5f,
-		 0.0f,
-		 0.0f,
-		 0.5f,
-		 0.0f
-		 ] as float[])
-		 def secondTriangle = new VertexArray()
-		 secondTriangle.addCoordinates([
-		 -1.0f,
-		 1.0f,
-		 0.0f,
-		 -0.7f,
-		 1.0f,
-		 0.0f,
-		 -0.8f,
-		 0.7f,
-		 0.0f
-		 ] as float[])
-		 secondTriangle.addIndices([0, 1 , 2] as int[])
-		 def plane = new VertexArray()
-		 plane.addCoordinates([
-		 // top right
-		 1.0f,
-		 1.0f,
-		 0.0f,
-		 // bottom right
-		 1.0f,
-		 0.8f,
-		 0.0f,
-		 // bottom left
-		 0.8f,
-		 0.8f,
-		 0.0f,
-		 // top left
-		 0.8f,
-		 1.0f,
-		 0.0f
-		 ] as float[])
-		 plane.addIndices([0, 1, 3, 1, 2 , 3] as int[])
-		 */
-		def thirdTriangle = new VertexArray()
-		thirdTriangle.addSingleBufferFloatAttributes(new Tuple2([
+		def triangle = new VertexArray()
+		triangle.addCoordinates([
+				// bottom left
 			-0.5f,
 			-0.5f,
 			0.0f,
+				// bottom right
 			0.5f,
 			-0.5f,
 			0.0f,
+				// top
 			0.0f,
 			0.5f,
 			0.0f
-		] as float[], 3), new Tuple2([
-			1.0f,
-			0.0f,
-			0.0f,
-			1.0f,
-			0.0f,
-			1.0f,
-			0.0f,
-			1.0f,
-			0.0f,
-			0.0f,
-			1.0f,
-			1.0f
-		] as float[], 4))
-		thirdTriangle.vertices = 3
+		] as float[])
+		triangle.addIndices([0, 1, 2] as int[])
+		triangle.addTextureCoordinates([
+				0.0f, 0.0f,
+				1.0f, 0,0f,
+				0.5f, 1.0f
+
+		] as float[])
+		def sampler = new Sampler()
+		def texture = new Texture(sampler, resourcesLoader.getResourceBytes("textures/wood.png"))
+		texture.use()
 		def vertexShader = new VertexShader(resourcesLoader, "shaders/demo.vs")
 		def fragmentShader = new FragmentShader(resourcesLoader, "shaders/demo.fs")
 		def colors = [
@@ -103,7 +55,6 @@ class Main {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		//shaderProgram.setUniform("color", colors[colorIndex])
 		//shaderProgram.setUniform("alpha", alpha / 100)
-		shaderProgram.use()
 		window.registerKeyCallback {w, key, scancode, action, mods ->
 			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
 				glfwSetWindowShouldClose(w, true)
@@ -123,25 +74,14 @@ class Main {
 			}
 			def before = Instant.now()
 			clearer().color().depth().clear()
+			texture.use()
 			shaderProgram.use()
-			//vertexArray.drawTriangles()
-			//secondTriangle.drawTriangles()
-			//plane.drawTriangles()
-			thirdTriangle.drawTriangles()
+			triangle.drawTriangles()
 			glfwSwapBuffers(w)
 			glfwPollEvents()
 			def after = Instant.now()
 			elapsed += Duration.between(before, after).toMillis()
 		}
-
-		/*
-		 [
-		 vertexArray,
-		 secondTriangle,
-		 plane
-		 ].each { it -> it.destroy() }
-		 */
-		thirdTriangle.destroy()
 		[vertexShader, fragmentShader].each { it -> it.delete() }
 		shaderProgram.delete()
 		window.destroy()

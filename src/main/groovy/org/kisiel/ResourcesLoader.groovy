@@ -17,6 +17,10 @@ class ResourcesLoader {
 	}
 
 	String getResource(String name) {
-		return new String(classLoader.getResourceAsStream(name).readAllBytes(), UTF_8)
+		return new String(getResourceBytes(name), UTF_8)
+	}
+
+	byte[] getResourceBytes(String name) {
+		return classLoader.getResourceAsStream(name).readAllBytes()
 	}
 }
